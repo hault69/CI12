@@ -22,14 +22,15 @@ public class GameWindow extends JFrame {
                 if (e.getKeyCode() == KeyEvent.VK_W){
                     isUpPress = true;
                 }
-
+            //down
                 if (e.getKeyCode() == KeyEvent.VK_S){
                     isDownPress = true;
                 }
-
+            //right
                 if (e.getKeyCode() == KeyEvent.VK_D){
                     isRightPress = true;
                 }
+             //left
                 if (e.getKeyCode() == KeyEvent.VK_A){
                     isLeftPress = true;
                 }

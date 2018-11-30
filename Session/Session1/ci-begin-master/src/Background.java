@@ -12,6 +12,8 @@ public class Background {
         this.y = 600-this.image.getHeight();
     }
     public void run(){
-        this.y++;
+        if (this.y < 0){
+            this.y+=10;
+        }
     }
 }

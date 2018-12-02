@@ -14,9 +14,9 @@ public class GameCanvas extends JPanel{
     @Override
     public void paint(Graphics g) {
         g.setColor(Color.white);
-        g.fillRect(0,0,800,600);
-        g.drawImage(this.background.image, this.background.x, this.background.y, null);
-        g.drawImage(this.player.image,this.player.x,this.player.y, null);
+        g.fillRect(0,0,Setting.SCREEN_WIDTH, Setting.SCREEN_HEIGHT);
+        g.drawImage(this.background.image, (int)this.background.position.x, (int)this.background.position.y, null);
+        g.drawImage(this.player.image,(int)this.player.position.x,(int)this.player.position.y, null);
     }
     public void runAll(){
 

@@ -1,6 +1,6 @@
-import javax.swing.*;
+package game;
+
 import java.awt.*;
-import java.util.Set;
 
 /**
  * Created by huynq on 7/4/17.

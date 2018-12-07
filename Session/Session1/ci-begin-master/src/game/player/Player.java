@@ -1,10 +1,14 @@
-package game;
+package game.player;
 
+import game.GameCanvas;
+import game.GameObject;
+import game.GameWindow;
+import game.Setting;
+import game.player.PlayerBullet;
 import game.renderer.Animation;
 import tklibs.Mathx;
 import tklibs.SpriteUtils;
 
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
@@ -26,7 +30,7 @@ public class Player extends GameObject {
         images.add(SpriteUtils.loadImage("assets\\images\\players\\straight\\4.png"));
         images.add(SpriteUtils.loadImage("assets\\images\\players\\straight\\5.png"));
         images.add(SpriteUtils.loadImage("assets\\images\\players\\straight\\6.png"));
-        this.renderer = new Animation(images);
+        this.renderer = new PlayerRenderer("Player",images);
 
     }
 
@@ -34,7 +38,7 @@ public class Player extends GameObject {
     public void run(){
         this.move();
         count++;
-        if (count>20){
+        if (count>10){
             this.fire();
         }
         this.limitPlayerPosition();
@@ -44,7 +48,7 @@ public class Player extends GameObject {
         if (GameWindow.isFirePress){
             PlayerBullet bullet = new PlayerBullet();
             bullet.position.set(this.position.x,this.position.y);
-            GameCanvas.playerBullets.add(bullet);
+            GameObject.addGameObject(bullet);
             count = 0;
         }
         //1. Tạo class PlayerBullet
@@ -70,10 +74,16 @@ public class Player extends GameObject {
         }
     }
     private void limitPlayerPosition(){
+        int halfWidth = (int)(Setting.PLAYER_WIDTH * this.anchor.x);
+        int haflHeight = (int)(Setting.PLAYER_HEIGHT * this.anchor.y);
         //limit x [0, background.image.getwith()]
-        float x = (float)Mathx.clamp(this.position.x,0,Setting.BACKGROUND_WIDTH-Setting.PLAYER_WIDTH);
+        float x = (float)Mathx.clamp(this.position.x,
+                                    halfWidth,
+                                    Setting.BACKGROUND_WIDTH-halfWidth);
         //limit y [0, screen.height]
-        float y = (float)Mathx.clamp(this.position.y,0,Setting.SCREEN_HEIGHT-Setting.PLAYER_HEIGHT);
+        float y = (float)Mathx.clamp(this.position.y,
+                                    haflHeight,
+                                    Setting.SCREEN_HEIGHT-haflHeight);
         this.position.set(x,y);
     }
 }

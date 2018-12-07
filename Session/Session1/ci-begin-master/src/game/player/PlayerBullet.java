@@ -1,5 +1,6 @@
-package game;
+package game.player;
 
+import game.GameObject;
 import game.renderer.Animation;
 import tklibs.SpriteUtils;
 
@@ -13,10 +14,11 @@ public class PlayerBullet extends GameObject {
 //        this.image = SpriteUtils.loadImage("assets\\images\\player-bullets\\a\\1.png");
         this.createRenderer();
     }
+    //tạo animation hiệu ứng
     private void createRenderer(){
         ArrayList<BufferedImage> images = new ArrayList<>();
-        images.add(SpriteUtils.loadImage("assets/images/player-bullets/a/0.png"));
         images.add(SpriteUtils.loadImage("assets/images/player-bullets/a/1.png"));
+        images.add(SpriteUtils.loadImage("assets/images/player-bullets/a/0.png"));
         images.add(SpriteUtils.loadImage("assets/images/player-bullets/a/2.png"));
         images.add(SpriteUtils.loadImage("assets/images/player-bullets/a/3.png"));
         this.renderer = new Animation(images);
@@ -24,7 +26,8 @@ public class PlayerBullet extends GameObject {
     }
     @Override
     public void run(){
-        this.position.addThis(0,-3);
+        this.position.addThis(0,-10);
     }
+    //set toc do dan bay len o bien y
 
 }

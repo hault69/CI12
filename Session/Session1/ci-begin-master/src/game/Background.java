@@ -16,6 +16,8 @@ public class Background extends GameObject {
         BufferedImage image = SpriteUtils.loadImage("assets\\images\\background\\0.png");
         this.renderer = new SingleImageRenderer(image);
         this.position.set(0, Setting.SCREEN_HEIGHT- Setting.BACKGROUND_HEIGHT);
+        //set lai vi tri anchor cho backgroud
+        this.anchor.set(0,0);
 //        this.position = new game.Vector2D(0,game.Setting.SCREEN_HEIGHT-game.Setting.BACKGROUND_HEIGHT);
     }
 

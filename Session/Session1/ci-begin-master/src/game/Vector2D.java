@@ -36,8 +36,8 @@ public class Vector2D {
         return this;
     }
 
-    public Vector2D addthis(Vector2D orther){
-        return this.addthis(orther.x,orther.y);
+    public Vector2D addThis(Vector2D orther){
+        return this.addThis(orther.x, orther.y);
     }
 
     public Vector2D substract(float x, float y){

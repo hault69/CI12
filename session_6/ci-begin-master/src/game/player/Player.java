@@ -1,7 +1,9 @@
 package game.player;
 
-import game.*;
-import game.renderer.AnimationRenderer;
+import game.FrameCounter;
+import game.GameObject;
+import game.GameWindow;
+import game.Settings;
 import tklibs.Mathx;
 import tklibs.SpriteUtils;
 
@@ -15,7 +17,7 @@ public class Player extends GameObject {
         super();
         this.position.set(200, 300);
         this.createRenderer();
-        this.fireCounter = new FrameCounter(20);
+        this.fireCounter = new FrameCounter(10);
     }
 
     private void createRenderer() {
@@ -63,9 +65,8 @@ public class Player extends GameObject {
 
     private void fire() {
         if(GameWindow.isFirePress) {
-            PlayerBullet bullet = new PlayerBullet();
+            PlayerBullet bullet = GameObject.recycle(PlayerBullet.class);
             bullet.position.set(this.position.x, this.position.y);
-            GameObject.addGameObject(bullet);
             this.fireCounter.reset();
         }
     }

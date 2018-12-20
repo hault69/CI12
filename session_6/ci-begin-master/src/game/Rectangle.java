@@ -1,9 +1,9 @@
 package game;
 
 public class Rectangle {
-    Vector2D position;
-    int width;
-    int height;
+    Vector2D position; // vị trí hình chữ nhật (góc trên bên trái)
+    int width; // chiều rộng hcn
+    int height; // chiều cao hcn
 
     public Rectangle() {
         this(new Vector2D(), 1, 1);
@@ -14,17 +14,39 @@ public class Rectangle {
         this.width = width;
         this.height = height;
     }
+    public float top(){
+        return this.position.y;
 
-    public boolean intersects(Rectangle other) {
-        if (this.position.x + this.width < other.position.x ||
-                other.position.x + other.width < this.position.x ||
-                this.position.y + this.height < other.position.y ||
-                other.position.y + other.height < this.position.y) {
-            return false;
-        }
-        return true;
+    }
+    public float bot(){
+        return this.top()+this.height;
+
+    }
+    public float left(){
+        return  this.position.x;
+
+    }
+    public float right(){
+        return this.left()+this.width;
+
     }
 
+
+    /**
+     * @param other
+     * @return true: nếu hình chữ nhật được gọi (this) có phần
+     * giao với hình chữ nhật truyền vào (other)
+     * @return false: nếu 2 hình chữ nhật ko giao nhau
+     */
+    public boolean intersects(Rectangle other) {
+        // TODO: 1. Triển khai phần code kiểm tra va chạm giữa 2 hình chữ nhật ở đây
+        return this.bot() >= other.top()
+                && this.top() <= other.bot()
+                && this.left() <= other.right()
+                && this.right() >= other.left();
+    }
+
+    //TODO: 2. Chạy hàm main này để test
     public static void main(String[] args) {
         Rectangle rect1 = new Rectangle(new Vector2D(5, 5), 3, 3);
         Rectangle rect2 = new Rectangle(new Vector2D(4, 4), 3, 3);

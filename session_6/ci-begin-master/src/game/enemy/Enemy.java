@@ -1,19 +1,27 @@
 package game.enemy;
 
+import game.FrameCounter;
 import game.GameObject;
 import game.Settings;
+import game.physics.BoxCollider;
+import game.physics.Physics;
 import game.renderer.AnimationRenderer;
 import tklibs.SpriteUtils;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-public class Enemy extends GameObject {
+public class Enemy extends GameObject implements Physics {
+    BoxCollider boxCollider;
+    FrameCounter fireCounter;
+
     public Enemy() {
         super();
-        this.createRenderer();
         this.position.set(0, -30);
         this.velocity.set(3, -1);
+        this.createRenderer();
+        this.boxCollider = new BoxCollider(this.position, this.anchor, 20, 20);
+        this.fireCounter = new FrameCounter(20);
     }
 
     private void createRenderer() {
@@ -28,8 +36,21 @@ public class Enemy extends GameObject {
     @Override
     public void run() {
         super.run();
+        this.move();
+        if (this.fireCounter.run()){
+            this.fire();
+        }
+    }
+    private void fire(){
+        EnemyBullet bullet = new EnemyBullet();
+        bullet.position.set(this.position.x,this.position.y);
+        GameObject.addGameObject(bullet);
+        this.fireCounter.reset();
+    }
+    private void move(){
+
         if(this.position.x > Settings.BACKGROUND_WIDTH - 14
-            && this.velocity.x > 0) {
+                && this.velocity.x > 0) {
             this.velocity.set(-3, this.velocity.y);
         }
         if(this.position.x < 14 && this.velocity.x < 0) {
@@ -43,6 +64,10 @@ public class Enemy extends GameObject {
         if(this.position.y < 14 && this.velocity.y < 0) {
             this.velocity.set(this.velocity.x, 1);
         }
+    }
 
+    @Override
+    public BoxCollider getBoxCollider() {
+        return this.boxCollider;
     }
 }

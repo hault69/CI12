@@ -4,19 +4,23 @@ import game.FrameCounter;
 import game.GameObject;
 import game.GameWindow;
 import game.Settings;
+import game.physics.BoxCollider;
+import game.physics.Physics;
 import tklibs.Mathx;
 import tklibs.SpriteUtils;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-public class Player extends GameObject {
+public class Player extends GameObject implements Physics {
     FrameCounter fireCounter;
+    BoxCollider boxCollider;
 
     public Player(){
         super();
         this.position.set(200, 300);
         this.createRenderer();
+        this.boxCollider = new BoxCollider(this.position, this.anchor, 20, 30);
         this.fireCounter = new FrameCounter(10);
     }
 
@@ -46,7 +50,7 @@ public class Player extends GameObject {
     private void move() {
         int vx = 0;
         int vy = 0;
-        int speed = 2;
+        int speed = 5;
         if(GameWindow.isUpPress) {
             vy--;
         }
@@ -85,5 +89,10 @@ public class Player extends GameObject {
                 , Settings.SCREEN_HEIGHT - halfHeight);
 
         this.position.set(x, y);
+    }
+
+    @Override
+    public BoxCollider getBoxCollider() {
+        return this.boxCollider;
     }
 }

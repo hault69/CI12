@@ -1,5 +1,4 @@
 package game.enemy;
-
 import game.GameObject;
 import game.physics.BoxCollider;
 import game.physics.Physics;

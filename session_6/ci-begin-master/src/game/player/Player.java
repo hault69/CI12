@@ -1,20 +1,18 @@
 package game.player;
 
-import game.FrameCounter;
-import game.GameObject;
-import game.GameWindow;
-import game.Settings;
+import game.*;
 import game.physics.BoxCollider;
-import game.physics.Physics;
 import tklibs.Mathx;
 import tklibs.SpriteUtils;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-public class Player extends GameObject implements Physics {
+public class Player extends GameObjectPhysics {
     FrameCounter fireCounter;
-    BoxCollider boxCollider;
+    int hp;
+    boolean immune;
+    FrameCounter immuneCounter;
 
     public Player(){
         super();
@@ -22,6 +20,9 @@ public class Player extends GameObject implements Physics {
         this.createRenderer();
         this.boxCollider = new BoxCollider(this.position, this.anchor, 20, 30);
         this.fireCounter = new FrameCounter(10);
+        this.hp = 3;
+        this.immune = false;
+        this.immuneCounter = new FrameCounter(90);
     }
 
     private void createRenderer() {
@@ -44,6 +45,12 @@ public class Player extends GameObject implements Physics {
         this.limitPlayerPosition();
         if(this.fireCounter.run()) {
             this.fire();
+        }
+        this.CheckImmune();
+    }
+    private void CheckImmune(){
+        if (this.immune && immuneCounter.run()){
+            this.immune = false;
         }
     }
 
@@ -91,8 +98,15 @@ public class Player extends GameObject implements Physics {
         this.position.set(x, y);
     }
 
-    @Override
-    public BoxCollider getBoxCollider() {
-        return this.boxCollider;
+    public void takeDamege(int damege){
+        if (this.immune)
+            return;
+        this.hp -=damege;
+        this.immune = true;
+        this.immuneCounter.reset();
+        if(this.hp<=0){
+            this.hp = 0;
+            this.destroy();
+        }
     }
 }
